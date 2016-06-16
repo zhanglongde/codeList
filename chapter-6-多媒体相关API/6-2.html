@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>代码清单6-2</title>
+</head>
+<body>
+	
+	<video id="videoElement" src="sample.mov"></video>	
+	
+	<script type="text/javascript">
+		var video = document.getElementById("videoElement");
+		video.addEventListener("error",function()
+			{
+				var error = video.error;
+				switch(error.code)
+				{
+
+					case 1:
+						alert("视频的下载过程被中止。");
+						break;
+					case 2:
+						alert("网络发生故障，视频的下载过程被中止。");
+						break;
+					case 3:
+						alert("解码失败。");
+						break;
+					case 1:
+						alert("媒体资源不可用或媒体格式不被支持。");
+						break;	
+				}
+			},false);
+	</script>
+</body>
+</html>

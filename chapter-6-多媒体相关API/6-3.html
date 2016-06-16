@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>代码清单6-3</title>
+</head>
+<body>
+	
+	<video id="video" src="sample.mov"></video>	
+	
+	<script type="text/javascript">
+		var video = document.getElementById("video");
+		video.addEventListener("progress",function(e)
+			{
+				var networkStateDisplay = document.getElementById("networkState");
+				// 根据networkState属性的值执行处理
+				if (video.networkState == 2) 
+				{
+					// 计算已加载的字节数与总字节数
+					networkStateDisplay.innerHTML = "加载中...[" + e.loaded + "/" + e.total + " byte]";
+
+				} 
+				else if (video.networkState == 3) 
+				{
+					networkStateDisplay.innerHTML = "加载失败" ;
+				}
+			},false);
+	</script>
+</body>
+</html>
