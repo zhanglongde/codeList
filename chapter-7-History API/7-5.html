@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>结合使用Canvas API与History API</title>
+	<style>
+		#canvas
+		{
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="400" height="300"></canvas>
+	<image id="image" src="brush.png" style="display:none"></image>
+	<script>
+		var image = document.getElementById("image");
+		var canvas = document.getElementById("canvas");
+		var context = canvas.getContext("2d");
+		var isDrawing = false;
+		var state = context.getImageDate(0,0,canvas.width,canvas.height);
+		history.push(state,null);
+		canvas.addElementListeners("pointerdown",function(e)
+			{
+				e.preventManipulation();
+			},false);
+		canvas.addEventListener("mousedown",startDrawing,false);
+		canvas.addEventListener("mousemove",draw,false);
+		canvas.addEventListener("mouseup",stopDrawing,false);
+		canvas.addEventListener("mousedown",startDrawing,false);
+		canvas.addEventListener("popstate",loadState,false);
+		function startDrawing()
+		{
+			isDrawing = true;
+		}
+		//绘制黑色小圆点
+		function draw(event)
+		{
+			if(isDrawing)
+			{
+				var sx = canvas.width/canvas.offsetWidth;
+				var sy = canvas.height/canvas.offsetHeight;
+				var x = sx.event.clientX -image.naturalWidth/2;
+				var y = sy.event.clientY -image.naturalHeight/2;
+				context.drawImage(image,x,y);
+			}
+			
+			var state = context.putImageDate(0,0,canvas.width,canvas.height);
+		}
+		//加载历史记录到canvas
+		function loadState(e)
+		{
+			context.clearRect(0,0,canvas.width,canvas.height);
+			if(e.state)
+			{
+				context.putImageDate(e.state,0,0);
+			}
+			
+		}
+		function stoptDrawing()
+		{
+			isDrawing = false;
+			//记录打开浏览器时的空白图像
+			var state = context.getImageDate(0,0,canvas.width,canvas.height);
+			history.pushState(state,null);
+		}
+	</script>
+</body>
+</html>
