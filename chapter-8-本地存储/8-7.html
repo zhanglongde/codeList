@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>利用storage事件实时监视 Web Storage中的数据</title>
+	<script>
+		window.addEventListener('storage',function(event) 
+		{
+			alert('ting   ');
+			 if(event.key == 'test')
+			 {
+			 	var output = document.getElementById('output');
+			 	output.innnerHTML = '原有值：'+ event.oldValue;
+			 	output.innnerHTML += '<br>新值：'+ event.newValue;
+			 	//解密url unescape()
+			 	output.innnerHTML += '<br>变动页面地址：'+ utf8_decode(unescape(event.url));
+			 	alert(unescape(event.url));
+			 	alert(event.storageArea == localStorage);
+			 }
+
+		},false);
+		function utf8_decode(utftext)
+		{
+			var string = '';
+			var i = 0;
+			var c = c1 = c2 = 0;
+			while(i<utftext.length)
+			{
+				c = utftext.charCodeAt(i);
+				if(c<128)
+				{
+					string += String.fromCharCode(c);
+					i++；
+				}
+				else if(c>191)&&(c<224)
+				{
+					c2 = utftext.charCodeAt(i+1);
+					string += String.fromCharCode(((c & 31)<< 6)|(c2 & c3));
+					i += 2;
+				}
+				else
+				{
+					c2 = utftext.charCodeAt(i+1);
+					c3 = utftext.charCodeAt(i+2);
+					string += String.fromCharCode(((c & 15)<< 12)|((c2 & c3)<<6);
+					i += 3;
+				}
+			}
+			return string;
+		}
+	</script>
+</head>
+<body>
+
+	<div id="output"></div>
+</body>
+</html>

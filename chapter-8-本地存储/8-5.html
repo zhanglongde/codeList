@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>简易数据库示例</title>
+</head>
+<body>
+	<h1>使用 Web Storage 来做简易数据库示例</h1>
+	<table>
+		<tr>
+			<td>姓名：</td>
+			<td><input id="name" type="text"></td>
+		</tr>
+		<tr>
+			<td>EMAIL：</td>
+			<td><input id="email" type="email"></td>
+		</tr>
+		<tr>
+			<td>电话号码：</td>
+			<td><input id="tel" type="tel"></td>
+		</tr>
+		<tr>
+			<td>备注：</td>
+			<td><input id="memo" type="text"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input value="保存"  type="button" onclick="saveStorage();"></td>
+		</tr>
+	</table>
+	<hr>
+	<p>检索：<input type="text" id="find">
+		<input type="button" value="检索" onclick="findStorage('msg');"> 
+	</p>
+	<p id="msg"></p>
+	<script>
+		function saveStorage()
+		{
+			// 创建对象
+			var  data = new Object();
+			//从输入文本框中获取数据
+			data.name = document.getElementById('name').value;
+			alert(data.name);
+			data.email = document.getElementById('email').value;
+			data.tel = document.getElementById('tel').value;
+			data.memo = document.getElementById('memo').value;
+			//将对象转换成JSON格式的文本数据；
+			var str = JSON.stringify(data);
+			//将文本存储在localStorage中
+			localStorage.setItem(data.name,str);
+
+
+		}
+		function findStorage(id)
+		{
+			var find =document.getElementById('find').value;
+			var str = localStorage.getItem(find)
+			var data = JSON.parse(str);
+			var result = '姓名：'+ data.name+'<br>' +
+						 'EMAIL：'+ data.email+'<br>' +
+						 '电话号码：'+ data.tel+'<br>' +
+						 '备注：'+ data.memo+'<br>' ;
+			var target = document.getElementById(id);
+			target.innerHTML = result;          
+		}
+	</script>
+</body>
+</html>

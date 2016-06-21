@@ -1,0 +1,31 @@
+<script>
+	function saveStorage()
+	{
+		// 创建对象
+		var  data = new Object();
+		//从输入文本框中获取数据
+		data.name = document.getElementById('name').value;
+		alert(data.name);
+		data.email = document.getElementById('email').value;
+		data.tel = document.getElementById('tel').value;
+		data.memo = document.getElementById('memo').value;
+		//将对象转换成JSON格式的文本数据；
+		var str = JSON.stringify(data);
+		//将文本存储在localStorage中
+		localStorage.setItem(data.name,str);
+
+
+	}
+	function findStorage(id)
+	{
+		var find =document.getElementById('find').value;
+		var str = localStorage.getItem(find)
+		var data = JSON.parse(str);
+		var result = '姓名：'+ data.name+'<br>' +
+					 'EMAIL：'+ data.email+'<br>' +
+					 '电话号码：'+ data.tel+'<br>' +
+					 '备注：'+ data.memo+'<br>' ;
+		var target = document.getElementById(id);
+		target.innerHTML = result;          
+	}
+</script>
